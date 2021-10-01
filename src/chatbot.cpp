@@ -28,6 +28,7 @@ ChatBot::ChatBot(std::string filename)
 
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
+     std::cout << "image loaded" << std::endl;
 }
 
 ChatBot::~ChatBot()
