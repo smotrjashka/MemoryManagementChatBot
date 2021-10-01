@@ -212,6 +212,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
     std::cout << "before call chatbot " << std::endl;
      ChatBot chatBot("../images/chatbot.png");
+     _chatBot = chatBot;
     std::cout << " SetChatLogicHandle " << std::endl;
     chatBot.SetChatLogicHandle(this);
     std::cout << " SetRootNode " << std::endl;
