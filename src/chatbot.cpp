@@ -15,6 +15,7 @@ ChatBot::ChatBot()
     _image = nullptr;
     _chatLogic = nullptr;
     _rootNode = nullptr;
+    _currentNode = nullptr;
 }
 
 // constructor WITH memory allocation
@@ -28,7 +29,7 @@ ChatBot::ChatBot(std::string filename)
 
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
-     std::cout << "image loaded" << std::endl;
+    _currentNode = nullptr;
 }
 
 ChatBot::~ChatBot()
@@ -39,7 +40,7 @@ ChatBot::~ChatBot()
     if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
         delete _image;
-        _image = NULL;
+        _image = NULL;  //TODO error???
     }
 }
 
@@ -74,6 +75,11 @@ ChatBot::ChatBot(ChatBot &&chatBot) {
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&chatBot) {
+
+    if (this == &chatBot){
+        return *this;
+    }
+
     _chatLogic = chatBot._chatLogic;
     _rootNode = chatBot._rootNode;
     _currentNode = chatBot._currentNode;
@@ -101,7 +107,7 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
         for (auto keyword : edge->GetKeywords())
         {
             EdgeDist ed{edge, ComputeLevenshteinDistance(keyword, message)};
-            levDists.push_back(ed);
+            levDists.emplace_back(ed);
         }
     }
 
@@ -134,6 +140,7 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
 
+    _chatLogic->SetChatbotHandle(node->getChatBotHandle());
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);
 }
