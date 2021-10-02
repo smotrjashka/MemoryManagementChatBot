@@ -41,6 +41,9 @@ public:
     std::vector<std::string> GetAnswers() { return _answers; }
     int GetNumberOfParents() { return _parentEdges.size(); }
 
+    ChatBot* GetChatBot() { return &_chatBot; }
+    void setChatBot(ChatBot chatBot) { _chatBot = std::move(chatBot); }
+    
     // proprietary functions
     void AddToken(std::string token); // add answers to list
     void AddEdgeToParentNode(GraphEdge *edge);
