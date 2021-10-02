@@ -215,7 +215,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
             }
             else
             {
-                std::cout << "ERROR : Multiple root nodes detected" << std::endl;
+                std::cout << "Multiple root nodes detected" << std::endl;
             }
         }
     }
@@ -242,7 +242,7 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
 
 void ChatLogic::SetChatbotHandle(ChatBot *chatbot)
 {
-    _chatBot = chatbot;
+    _chatBot =std::move(chatbot);
 }
 
 void ChatLogic::SendMessageToChatbot(std::string message)
@@ -258,4 +258,8 @@ void ChatLogic::SendMessageToUser(std::string message)
 wxBitmap *ChatLogic::GetImageFromChatbot()
 {
     return _chatBot->GetImageHandle();
+}
+
+ChatBot *ChatLogic::getChatbotHandle() {
+    return _chatBot;
 }
